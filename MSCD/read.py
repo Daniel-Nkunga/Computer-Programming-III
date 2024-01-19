@@ -34,31 +34,48 @@ wall=5
 # cave[x-size//2:x+size//2+1,
 #      y-size//2:y+size//2+1,
 #      z-size//2:z+size//2+1]=0
-for i in range(0, x, 75):
-     for j in range(0, y, 75):
-          for k in range(0, z, 75):
-            cave[i:i + size + wall,
-                 j:j + size + wall,
-                 k:k + size + wall]=1
-            cave[i + wall:i + size,
-                 j + wall:j + size,
-                 k + wall:k + size]=0
-            if(np.abs(cave*1.0-ogCave).sum() <= 40_000):
-                print(f"good cost at {i}, {j}, {k}")
-                cave = ogCave * 1
-                saveCave(cave, "output.cave")
-            else:
-                cave = ogCave * 1
-                # print("too expensive")
-                saveCave(cave, "output.cave")
+
+#Looks for the best cave
+# for i in range(0, x, 25):
+#      for j in range(0, y, 25):
+#           for k in range(0, z, 25):
+#             cave[i:i + size + wall,
+#                  j:j + size + wall,
+#                  k:k + size + wall]=1
+#             cave[i + wall:i + size,
+#                  j + wall:j + size,
+#                  k + wall:k + size]=0
+#             if(np.abs(cave*1.0-ogCave).sum() <= 30_000):
+#                 print(f"good cost at {i}, {j}, {k}: ",np.abs(cave*1.0-ogCave).sum())
+#                 cave = ogCave * 1
+#                 saveCave(cave, "output.cave")
+#             else:
+#                 cave = ogCave * 1
 
 # #Test Cave
-# cave[0:0 + size + wall,
-#     0:0 + size + wall,
-#     0:0 + size + wall]=1
-# cave[0 + wall:0 + size,
-#         0 + wall:0 + size,
-#         0 + wall:0 + size]=0
+cave[25:25 + size + wall,
+    25:25 + size + wall,
+    25:25 + size + wall]=1
+cave[25 + wall:25 + size,
+        25 + wall:25 + size,
+        25 + wall:25 + size]=0
+#Missing Dirt
+missingDirt = ogCave.sum() - cave.sum()
+print(missingDirt)
+
+i, j, k = 0, 0, 0
+
+while missingDirt > 0 and i < 512 and j < 512 and k < 512:
+    if cave[i, j, k] == 0:
+        cave[i, j, k] = 1
+        missingDirt -= 1
+    i += 1
+    if i == 512:
+        i = 0
+        j += 1
+        if j == 512:
+            j = 0
+            k += 1
 
 # saveCave(cave,"output.cave")
 print("cost",np.abs(cave*1.0-ogCave).sum() )
