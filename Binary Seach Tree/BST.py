@@ -82,6 +82,27 @@ class TreeNode:
             self.right = self.right.delete_node(temp.value)
 
         return self
+    
+    def array_to_tree():
+        #This should just be quick sort
+        """ 
+        Find middle index of array (right middle index if array is even)
+        Pop index and add to tree
+        Go to righter most array
+        Find middle index of the array (right middle index if array is even)
+        Pop index and add to tree
+        Go to righter most array
+
+        If ther are no more righter most array, go to the array one to the left and find the middle index
+        Pop index and add to tree
+        Go to the righter most array
+        Find middle index of the array (right middle index if array is even)
+        Pop index and add to tree
+        Go to righter most array
+
+        Repeat steps until all elements are added to tree; tree will be even in height
+        """
+        return 0
         
 tree = TreeNode(8)
 tree.insert(16)
