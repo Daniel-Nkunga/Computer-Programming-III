@@ -83,7 +83,7 @@ class TreeNode:
 
         return self
     
-    def array_to_tree():
+    def array_to_tree(array):
         #This should just be quick sort
         """ 
         Find middle index of array (right middle index if array is even)
@@ -104,17 +104,40 @@ class TreeNode:
         """
         return 0
         
-tree = TreeNode(8)
-tree.insert(16)
-tree.insert(4)
-tree.insert(15)
-tree.insert(17)
-tree.insert(5)
-tree.insert(3)
+# tree = TreeNode(8)
+# tree.insert(16)
+# tree.insert(4)
+# tree.insert(15)
+# tree.insert(17)
+# tree.insert(5)
+# tree.insert(3)
 
-tree.preorder_traversal()
+# tree.preorder_traversal()
+# print()
+# tree.delete_node(5)
+# tree.preorder_traversal()
+
+#Array Testing
+array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+# print(len(array))
+print(array)
+new_array = array[(len(array)//2):]
+print(new_array)
+new_array.pop(0)
 print()
-tree.delete_node(5)
-tree.preorder_traversal()
 
-##This is just so I have something to commit
+array = new_array
+print(array)
+new_array = array[(len(array)//2):]
+print(new_array)
+new_array.pop(0)
+print()
+
+array = new_array
+print(array)
+new_array = array[(len(array)//2):]
+print(new_array)
+new_array.pop(0)
+print()
+
+print(new_array)
