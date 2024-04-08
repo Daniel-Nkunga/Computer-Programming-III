@@ -103,12 +103,68 @@ class TreeNode:
         
         return TreeNode.array_to_tree_helper(array, 0, len(array) - 1)
     
-    def rotate_left():
-        pass
+    # def rotate_left():
+    #     """
+    #     #Save all of these values from the original tree. A, B, and C should have the potential to be their own trees
+    #     a = self.value
+    #     b = self.right.value
+    #     A = self.left
+    #     B = self.right.left
+    #     C = self.right.left
 
-array = [1, 12, 31, 14, 51, 16, 71, 18, 91]
+    #     #Create a new tree
+    #     self.value = b
+    #     self.left = a
+    #     self.left.left = A
+    #     self.left.right = B
+    #     self.right = C 
+    #     """
+
+    def rotate_left(self):
+        if not self.right:
+            return  # No right child to rotate
+        
+        # Save relevant values
+        a = self.value
+        b = self.right.value
+        A = self.left
+        B = self.right.left
+        C = self.right.right
+
+        # Reassign values and children
+        self.value = b
+        self.left = TreeNode(a)
+        self.left.left = A
+        self.left.right = B
+        self.right = C
+
+    def rotate_right(self):
+        if not self.left:
+            return  # No left child to rotate
+        
+        # Save relevant values
+        a = self.value
+        b = self.left.value
+        A = self.left.left
+        B = self.left.right
+        C = self.right
+
+        # Reassign values and children
+        self.value = b
+        self.right = TreeNode(a)
+        self.right.left = B
+        self.right.right = C
+        self.left = A
+
+array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 root = TreeNode.array_to_tree(array)
-root.inorder_traversal()
-print("Done!")
+root.preorder_traversal()
 
+# Rotate the tree
+root.rotate_right()
+
+# After rotation, print the tree to verify
+print("After rotation:")
+root.preorder_traversal()
+print("Done!")
 
