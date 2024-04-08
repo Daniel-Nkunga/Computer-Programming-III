@@ -83,61 +83,84 @@ class TreeNode:
 
         return self
     
-    def array_to_tree(array):
-        #This should just be quick sort
-        """ 
-        Find middle index of array (right middle index if array is even)
-        Pop index and add to tree
-        Go to righter most array
-        Find middle index of the array (right middle index if array is even)
-        Pop index and add to tree
-        Go to righter most array
-
-        If ther are no more righter most array, go to the array one to the left and find the middle index
-        Pop index and add to tree
-        Go to the righter most array
-        Find middle index of the array (right middle index if array is even)
-        Pop index and add to tree
-        Go to righter most array
-
-        Repeat steps until all elements are added to tree; tree will be even in height
-        """
-        return 0
+    @staticmethod
+    def array_to_tree_helper(array, start, end):
+        if start > end:
+            return None
         
-# tree = TreeNode(8)
-# tree.insert(16)
-# tree.insert(4)
-# tree.insert(15)
-# tree.insert(17)
-# tree.insert(5)
-# tree.insert(3)
+        mid = (start + end) // 2
+        root = TreeNode(array[mid])
+        
+        root.left = TreeNode.array_to_tree_helper(array, start, mid - 1)
+        root.right = TreeNode.array_to_tree_helper(array, mid + 1, end)
+        
+        return root
 
-# tree.preorder_traversal()
-# print()
-# tree.delete_node(5)
-# tree.preorder_traversal()
+    @staticmethod
+    def array_to_tree(array):
+        if not array:
+            return None
+        
+        return TreeNode.array_to_tree_helper(array, 0, len(array) - 1)
 
-#Array Testing
-array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-# print(len(array))
-print(array)
-new_array = array[(len(array)//2):]
-print(new_array)
-new_array.pop(0)
-print()
+    # def array_to_tree(array):
+    #     #This should just be quick sort
+    #     """ 
+    #     Find middle index of array (right middle index if array is even)
+    #     Pop index and add to tree
+    #     Go to righter most array
 
-array = new_array
-print(array)
-new_array = array[(len(array)//2):]
-print(new_array)
-new_array.pop(0)
-print()
+    #     Find middle index of the array (right middle index if array is even)
+    #     Pop index and add to tree
+    #     Go to righter most array
 
-array = new_array
-print(array)
-new_array = array[(len(array)//2):]
-print(new_array)
-new_array.pop(0)
-print()
+    #     If ther are no more righter most array, go to the array one to the left and find the middle index
+    #     Pop index and add to tree
+    #     Go to the righter most array
 
-print(new_array)
+    #     Find middle index of the array (right middle index if array is even)
+    #     Pop index and add to tree
+    #     Go to righter most array
+
+    #     Repeat steps until all elements are added to tree; tree will be even in height
+    #     """
+    #     return 0
+    
+    def bad_array_to_tree():
+        tree.self.value = None
+        #Root
+        tree = TreeNode(array[len(array)//2])
+
+        #Right
+        for i in range(len(array)//2 + 1, len(array)):
+            tree.insert(array[i])
+
+        #Left
+        for j in range(0, len(array)//2):
+            tree.insert (array[j])
+
+        return tree
+    
+    def rotate_left():
+        """
+        a = self.value
+        b = self.right.value
+        A = self.left
+        B = self.right.left
+        C = self.right.right
+         
+        Turns into 
+
+        self.value = b
+        self.left = Node(a)
+        self.left.left = A
+        self.left.right = B
+        self.right = C
+        """
+
+array = [1, 12, 31, 14, 51, 16, 71, 18, 91]
+root = TreeNode.array_to_tree(array)
+root.inorder_traversal()
+print("Done!")
+
+
