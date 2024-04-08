@@ -103,37 +103,8 @@ class TreeNode:
         
         return TreeNode.array_to_tree_helper(array, 0, len(array) - 1)
     
-    def bad_array_to_tree():
-        tree.self.value = None
-        #Root
-        tree = TreeNode(array[len(array)//2])
-
-        #Right
-        for i in range(len(array)//2 + 1, len(array)):
-            tree.insert(array[i])
-
-        #Left
-        for j in range(0, len(array)//2):
-            tree.insert (array[j])
-
-        return tree
-    
     def rotate_left():
-        """
-        a = self.value
-        b = self.right.value
-        A = self.left
-        B = self.right.left
-        C = self.right.right
-         
-        Turns into 
-
-        self.value = b
-        self.left = Node(a)
-        self.left.left = A
-        self.left.right = B
-        self.right = C
-        """
+        pass
 
 array = [1, 12, 31, 14, 51, 16, 71, 18, 91]
 root = TreeNode.array_to_tree(array)
