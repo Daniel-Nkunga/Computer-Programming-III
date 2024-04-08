@@ -139,15 +139,44 @@ class TreeNode:
         self.right.right = C
         self.left = A
 
+#Examples
+print("Array to Tree")
 array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-root = TreeNode.array_to_tree(array)
-root.preorder_traversal()
+print(array)
+tree = TreeNode.array_to_tree(array)
+tree.preorder_traversal()
+print()
 
-# Rotate the tree
-root.rotate_right()
+#Display 
+print("Print Inorder Traversal")
+tree.inorder_traversal()
+print()
 
-# After rotation, print the tree to verify
-print("After rotation:")
-root.preorder_traversal()
-print("Done!")
+print("Print Preorder Traversal")
+tree.preorder_traversal()
+print()
 
+print("Print Postorder Traversal")
+tree.postorder_traversal()
+print()
+
+#Rotation Functions
+print("Rotate Left")
+tree.rotate_left()
+tree.preorder_traversal()
+print("Resetting Tree")
+tree = TreeNode.array_to_tree(array)
+print()
+
+print("Rotate Right")
+tree.rotate_right()
+tree.preorder_traversal()
+print("Resetting Tree")
+tree = TreeNode.array_to_tree(array)
+print()
+
+#Delete showcase
+print("Delete")
+print("Deleting 5")
+tree.delete_node(5)
+tree.preorder_traversal()
