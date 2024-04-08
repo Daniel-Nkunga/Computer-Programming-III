@@ -102,27 +102,10 @@ class TreeNode:
             return None
         
         return TreeNode.array_to_tree_helper(array, 0, len(array) - 1)
-    
-    # def rotate_left():
-    #     """
-    #     #Save all of these values from the original tree. A, B, and C should have the potential to be their own trees
-    #     a = self.value
-    #     b = self.right.value
-    #     A = self.left
-    #     B = self.right.left
-    #     C = self.right.left
-
-    #     #Create a new tree
-    #     self.value = b
-    #     self.left = a
-    #     self.left.left = A
-    #     self.left.right = B
-    #     self.right = C 
-    #     """
 
     def rotate_left(self):
         if not self.right:
-            return  # No right child to rotate
+            return  # Case where there is no right child to rotate
         
         # Save relevant values
         a = self.value
@@ -140,7 +123,7 @@ class TreeNode:
 
     def rotate_right(self):
         if not self.left:
-            return  # No left child to rotate
+            return  # Case where there is no left child to rotate
         
         # Save relevant values
         a = self.value
