@@ -194,6 +194,7 @@ def main():
     print("Deleting 5")
     tree.delete_node(5)
     tree.preorder_traversal()
+    print()
 
     #Successor Showcase
     print("Next Successor")
