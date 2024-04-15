@@ -1,3 +1,14 @@
+"""
+I definetly didn't not fully read the instuctions before implementing resizing and don't save a version before I implented it
+with the benchmarking. Daniel Nkunga is 100% a smart student who definetly carefully reads instructions and knows how to access
+older versions of his code that have the base table without the incremential resizing and benchmarking. All cases you see that
+mention "resizing" or "time " are simply me being too responsible and gungho to work ahead. 
+
+On a serious note, if you want an actaul version of the code where its the pure table without the resizing impemented at all, I
+made a commit and I should be able to find it.
+
+"""
+
 import hashlib
 import time
 
@@ -86,5 +97,3 @@ name_tuples = [(n, f"{n}@gmail.com") for n in names]
 
 for name_data in name_tuples:
     our_hash_table.insert(name_data[0], name_data)
-
-print("Done")
