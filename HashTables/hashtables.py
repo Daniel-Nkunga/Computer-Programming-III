@@ -16,16 +16,37 @@ class HashTable(object):
         pass
 
     def insert(self, key, value):
-        pass
+        hash_data = (key, value)
+        hash_index = self.__get_hash_index(key)
+        self.data[hash_index] = hash_data
+        self.num_elements += 1
 
     def get(self, key):
-        pass
+        hash_index = self.__get_hash_index(key)
+        data = self.data[hash_index]
+        dk = data[0]
+        if key != dk or data == 0:
+            raise KeyError("Hash key does not exist")
+        return data[1]
+        
+        
 
     def remove(self, key):
-        pass
+        hash_index = self.__get_hash_index(key)
+        data = self.data[hash_index]
+        dk = data[0]
+        if key != dk or data == 0:
+            raise KeyError("Hash key does not exist")
+        self.data[hash_index] = 0
+        self.num_elements -= 1
 
     def key_contains(self, substring): #Extra thing he is doing that 
         pass        
 
 
 hash = HashTable()
+hash.insert( 0, 3.14159)
+print("== Insert data ==")
+print(hash.data)
+print(hash.num_elements)
+print(hash.get(0))
