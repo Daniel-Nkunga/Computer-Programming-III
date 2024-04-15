@@ -1,40 +1,59 @@
 import hashlib
+import time
 
 class HashTable(object):
-    def __init__(self, size = 3): #Size should porblaby need to be removed
-        self.num_elements = 0 #Number of elements in the table
-        self.data = [0] * size
-        self.size = len(self.data) #Allows for incrimental resizing
-        print(self.data)
+
+    def __init__(self, size=16):
+        self.num_elements = 0
+        self.data = [None] * size  # Use None instead of 0 to differentiate empty slots
+        self.size = size
+        self.resize_count = 0
+        self.total_resize_time = 0
 
     def __get_hash_index(self, key):
         key_str = str(key)
-        our_hash =  int(hashlib.md5(key_str.encode()).hexdigest(), 16)
+        our_hash = int(hashlib.md5(key_str.encode()).hexdigest(), 16)
         return our_hash % self.size
-        
+
     def __resize(self):
-        raise NotImplementedError
+        start_time = time.time()
+        new_size = self.size * 2
+        new_data = [None] * new_size
+        for bucket in self.data:
+            if bucket is not None:
+                for (k, v) in bucket:
+                    new_hash_index = self.__get_hash_index(k)
+                    if new_data[new_hash_index] is None:
+                        new_data[new_hash_index] = [(k, v)]
+                    else:
+                        new_data[new_hash_index].append((k, v))
+        self.data = new_data
+        self.size = new_size
+        self.resize_count += 1
+        elapsed_time = time.time() - start_time
+        self.total_resize_time += elapsed_time
+        print(f"{self.size}, {elapsed_time:.10f}")
 
     def insert(self, key, value):
         hash_data = (key, value)
         hash_index = self.__get_hash_index(key)
-        
-        if self.data[hash_index] == 0:
+        if self.data[hash_index] is None:
             self.data[hash_index] = [hash_data]
         else:
             self.data[hash_index].append(hash_data)
         self.num_elements += 1
+        if self.num_elements > self.size * 0.5:
+            self.__resize()
 
     def __get_data_index_tuple(self, key):
         hash_index = self.__get_hash_index(key)
-        data_list = self.data[hash_index]
-        if data_list == 0:
-            return None
-        for data_index, data in enumerate(data_list):
-            dk = data[0]
-            if dk == key:
-                return (hash_index, data_index)
-        
+        bucket = self.data[hash_index]
+
+        if bucket is not None:
+            for data_index, (k, _) in enumerate(bucket):
+                if k == key:
+                    return (hash_index, data_index)
+        return None
 
     def get(self, key):
         dit = self.__get_data_index_tuple(key)
@@ -46,30 +65,33 @@ class HashTable(object):
         dit = self.__get_data_index_tuple(key)
         if not dit:
             raise KeyError("Hash key does not exist")
-        if len(self.data[dit[0]]) == 1:
-            self.data[dit[0]] = 0
+
+        bucket = self.data[dit[0]]
+        if len(bucket) == 1:
+            self.data[dit[0]] = None
         else:
             del self.data[dit[0]][dit[1]]
+
         self.num_elements -= 1
 
-    def key_contains(self, substring): #Extra thing he is doing that 
-        raise NotImplementedError        
+    def key_contains(self, substring):
+        raise NotImplementedError
 
+start = time.time()
 
+# Test the HashTable implementation
 our_hash_table = HashTable()
-names = ["Jim", "Mark","Steve", "Tony", "Jimbo", "Jimbob", "Havana", "Rashesh"]
-name_tuples = [(n,f"{n}@gmail.com") for n in names]
- 
+names = []
+for i in range(10_000_000):
+    names.append(i)
+name_tuples = [(n, f"{n}@gmail.com") for n in names]
+
 for name_data in name_tuples:
     our_hash_table.insert(name_data[0], name_data)
-print("== Insert data ==")
-print(our_hash_table.data)
-print(our_hash_table.num_elements)
-print("==Get data==")
-print(our_hash_table.get("Jim"))
-print("== Remove data==")
-our_hash_table.remove("Jim")
-print(our_hash_table.data)
-our_hash_table.remove("Mark")
-print(our_hash_table.data)
-print(our_hash_table.num_elements)
+
+end = time.time()
+total_time = end - start
+
+print(f"Total time elapsed: {total_time:.2f} seconds")
+print(f"Total resizes: {our_hash_table.resize_count}")
+print(f"Average resize time: {our_hash_table.total_resize_time / our_hash_table.resize_count:.6f} seconds")
