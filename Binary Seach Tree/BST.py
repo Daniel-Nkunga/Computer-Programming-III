@@ -174,13 +174,19 @@ class TreeNode:
 
 
 def main():
-    tree = TreeNode(0)
-    for i in range(100):
-        tree.insert(random.randint(1, 1000))
-    tree.preorder_traversal()
-    print(tree.height_factor())
+    start = time.time()
+    n = 0
+    tree = TreeNode(random.randint(1, 2**32))
+    for i in range(2**15 + 3):
+        if i == 2**n:
+            print(f"{i}, {(time.time() - start):.10}")
+            n = n+1
+        tree.insert(random.randint(1, 2**32))
+    # tree.preorder_traversal()
+    # print()
+    # print(tree.height_factor())
+    print(time.time() - start)
 
 
 if __name__ == "__main__":
     main()
-    
