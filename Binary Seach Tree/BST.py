@@ -1,3 +1,6 @@
+import time
+import random
+
 class TreeNode:
 
     def __init__(self, value):
@@ -16,6 +19,10 @@ class TreeNode:
                 self.right = TreeNode(value)
             else:
                 self.right.insert(value)
+        if self.height_factor() > 1:
+            self.rotate_left()
+        if self.height_factor() <= -1:
+            self.rotate_right()
 
     def inorder_traversal(self): #Prints nodes in ascending order
         if self.left:
@@ -80,7 +87,10 @@ class TreeNode:
             temp = self.get_min_value_node(self.right) #Shift tree from right children
             self.value = temp.value
             self.right = self.right.delete_node(temp.value)
-
+        if self.height_factor() > 1:
+            self.rotate_left()
+        if self.height_factor() <= -1:
+            self.rotate_right()
         return self
 
     def in_order_successor(self, target):
@@ -152,57 +162,25 @@ class TreeNode:
         self.right.right = C
         self.left = A
 
+    def get_height(self):
+        left_height = self.left.get_height() if self.left else 0
+        right_height = self.right.get_height() if self.right else 0
+        return 1 +max(left_height, right_height)
+    
+    def height_factor(self):
+        right_height = self.right.get_height() if self.right else 0
+        left_height = self.left.get_height() if self.left else 0
+        return right_height - left_height
+
+
 def main():
-    #Examples
-    print("Array to Tree")
-    array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    print(array)
-    tree = TreeNode.array_to_tree(array)
+    tree = TreeNode(0)
+    for i in range(100):
+        tree.insert(random.randint(1, 1000))
     tree.preorder_traversal()
-    print()
+    print(tree.height_factor())
 
-    #Display 
-    print("Print Inorder Traversal")
-    tree.inorder_traversal()
-    print()
-
-    print("Print Preorder Traversal")
-    tree.preorder_traversal()
-    print()
-
-    print("Print Postorder Traversal")
-    tree.postorder_traversal()
-    print()
-
-    #Rotation Functions
-    print("Rotate Left")
-    tree.rotate_left()
-    tree.preorder_traversal()
-    print("Resetting Tree")
-    tree = TreeNode.array_to_tree(array)
-    print()
-
-    print("Rotate Right")
-    tree.rotate_right()
-    tree.preorder_traversal()
-    print("Resetting Tree")
-    tree = TreeNode.array_to_tree(array)
-    print()
-
-    #Delete showcase
-    print("Delete")
-    print("Deleting 5")
-    tree.delete_node(5)
-    tree.preorder_traversal()
-    print()
-
-    #Successor Showcase
-    print("Next Successor")
-    print("Finding successor to 10")
-    print(tree.in_order_successor(10).value)
-    print()
-
-    print("Done!")
 
 if __name__ == "__main__":
     main()
+    
