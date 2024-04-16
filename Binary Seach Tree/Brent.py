@@ -1,3 +1,6 @@
+import time
+import random
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -246,3 +249,15 @@ class AVLTree:
 
     def __str__(self):
         return str(self.root)
+
+
+
+start = time.time()
+n = 0
+tree = Node(random.randint(1, 2**32))
+for i in range(2**15 + 3):
+    if i == 2**n:
+        print(f"{i}, {(time.time() - start):.10}")
+        n = n+1
+    tree.add(random.randint(1, 2**32))
+print(time.time() - start)

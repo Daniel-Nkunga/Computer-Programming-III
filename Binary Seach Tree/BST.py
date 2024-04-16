@@ -182,9 +182,6 @@ def main():
             print(f"{i}, {(time.time() - start):.10}")
             n = n+1
         tree.insert(random.randint(1, 2**32))
-    # tree.preorder_traversal()
-    # print()
-    # print(tree.height_factor())
     print(time.time() - start)
 
 
